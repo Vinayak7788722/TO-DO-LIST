@@ -59,9 +59,6 @@ npm install
 node index.js
 Then open your browser and go to: http://localhost:8000
 
-📸 Screenshots
-![image](https://github.com/user-attachments/assets/73ade101-0804-4daf-aea5-59218013768a)
-
 📌 Submission Details
 Project Type: EJS To-Do App
 
