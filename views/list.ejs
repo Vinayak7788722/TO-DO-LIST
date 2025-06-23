@@ -1,0 +1,53 @@
+<%- include("partials/header") %>
+
+<div class="box">
+  <!-- Add Task Form -->
+  <form action="/" method="POST" name="todoForm">
+    <input type="text" name="ele1" placeholder="Enter the task">
+    <button type="submit">+</button>
+  </form>
+</div>
+
+<div class="box">
+  <% for (let i = 0; i < ejes.length; i++) { %>
+    <% let task = ejes[i]; %>
+    <div class="todo-item">
+      <!-- Toggle Checkbox -->
+      <form action="/toggle" method="POST" style="display: inline;">
+        <input type="hidden" name="index" value="<%= i %>">
+        <input type="checkbox" onclick="this.form.submit()" <%= task.done ? 'checked' : '' %>>
+      </form>
+
+      <!-- Task Text -->
+      <span style="text-decoration: <%= task.done ? 'line-through' : 'none' %>; opacity: <%= task.done ? '0.6' : '1' %>;">
+        <%= task.text %>
+      </span>
+
+      <!-- Delete Button -->
+      <form action="/delete" method="POST" style="display:inline;">
+        <input type="hidden" name="index" value="<%= i %>">
+        <button type="submit">Delete</button>
+      </form>
+
+      <!-- Edit Form -->
+      <form action="/edit" method="POST" style="display:inline;">
+        <input type="hidden" name="index" value="<%= i %>">
+        <input type="text" name="newText" placeholder="Edit task">
+        <button type="submit">Edit</button>
+      </form>
+    </div>
+  <% } %>
+</div>
+
+<script>
+  const form = document.forms["todoForm"];
+  const input = form["ele1"];
+  form.addEventListener("submit", function (e) {
+    if (input.value.trim() === "") {
+      e.preventDefault();
+      alert("Please enter a task before adding.");
+    }
+  });
+</script>
+
+<%- include("partials/footer") %>
