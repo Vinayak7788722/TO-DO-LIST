@@ -1,12 +1,14 @@
 const express = require("express");
+const methodOverride = require("method-override");
 const app = express();
 
 // Set EJS as the templating engine
 app.set("view engine", "ejs");
 
-// Parse form data and serve static files (like CSS)
+// Middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
+app.use(methodOverride('_method')); // Support PUT & DELETE
 
 // In-memory task list
 let items = [];
@@ -34,18 +36,18 @@ app.post("/toggle", (req, res) => {
   res.redirect("/");
 });
 
-// Delete Task
-app.post("/delete", (req, res) => {
-  const index = parseInt(req.body.index);
+// ✅ DELETE Task (now using DELETE)
+app.delete("/delete/:index", (req, res) => {
+  const index = parseInt(req.params.index);
   if (!isNaN(index)) {
     items.splice(index, 1);
   }
   res.redirect("/");
 });
 
-// Edit Task
-app.post("/edit", (req, res) => {
-  const index = parseInt(req.body.index);
+// ✅ EDIT Task (now using PUT)
+app.put("/edit/:index", (req, res) => {
+  const index = parseInt(req.params.index);
   const newText = req.body.newText.trim();
   if (!isNaN(index) && newText !== "") {
     items[index].text = newText;
