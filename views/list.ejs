@@ -15,7 +15,7 @@
       <!-- Toggle Checkbox -->
       <form action="/toggle" method="POST" style="display: inline;">
         <input type="hidden" name="index" value="<%= i %>">
-        <input type="checkbox" onclick="this.form.submit()" <%= task.done ? 'checked' : '' %>>
+        <input type="checkbox" onclick="this.form.submit()" <%= task.done ? 'checked' : '' %> >
       </form>
 
       <!-- Task Text -->
@@ -23,16 +23,14 @@
         <%= task.text %>
       </span>
 
-      <!-- Delete Button -->
-      <form action="/delete" method="POST" style="display:inline;">
-        <input type="hidden" name="index" value="<%= i %>">
+      <!-- 🗑️ DELETE Button using method-override -->
+      <form action="/delete/<%= i %>?_method=DELETE" method="POST" style="display:inline;">
         <button type="submit">Delete</button>
       </form>
 
-      <!-- Edit Form -->
-      <form action="/edit" method="POST" style="display:inline;">
-        <input type="hidden" name="index" value="<%= i %>">
-        <input type="text" name="newText" placeholder="Edit task">
+      <!-- ✏️ EDIT Form using method-override -->
+      <form action="/edit/<%= i %>?_method=PUT" method="POST" style="display:inline;">
+        <input type="text" name="newText" placeholder="Edit task" value="<%= task.text %>" required>
         <button type="submit">Edit</button>
       </form>
     </div>
